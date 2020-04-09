@@ -13,7 +13,7 @@ const {format} = require('util');
 const database = require('../database');
 
 const projectId = 'expoed';
-const keyFilename = 'config/key.json';
+const keyFilename = 'expoed-17cdf2617eac.json';
 const storage = new Storage({projectId, keyFilename});
 
 // Multer is required to process file uploads and make them available via

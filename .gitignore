@@ -1,5 +1,6 @@
 # Node.js dependencies:
 node_modules/
 
-config/key.json
+key.json
 constants.js
+expoed-17cdf2617eac.json
