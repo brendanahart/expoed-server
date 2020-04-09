@@ -294,9 +294,9 @@ router.get("/stripe/connect/oauth", async (req, res) => {
         },
         (err) => {
             if (err.type === 'StripeInvalidGrantError') {
-                return res.redirect(400, domain + "/restaurant")
+                return res.redirect(400, domain + "/#/restaurant")
             } else {
-                return res.redirect(500, domain + "/restaurant")
+                return res.redirect(500, domain + "/#/restaurant")
             }
         }
     );
