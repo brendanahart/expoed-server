@@ -5,7 +5,7 @@ const {Storage} = require('@google-cloud/storage');
 // the client, the client library will look for credentials in the
 // environment.
 const projectId = 'expoed';
-const keyFilename = '../key.json';
+const keyFilename = '../config/key.json';
 const storage = new Storage({projectId, keyFilename});
 
 
