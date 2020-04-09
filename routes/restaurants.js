@@ -40,6 +40,8 @@ const selectExposPurchasedR = "SELECT e.id, res.name, res.email, res.authId, o.o
     "INNER JOIN expos AS e ON e.restaurantId = res.id INNER JOIN offers AS o ON e.offerId = o.id " +
     "INNER JOIN restaurants AS r ON r.id = o.restaurantId WHERE r.authId = ?";
 
+const domain = process.env.DOMAIN || "http://localhost:4200";
+
 async function get_restaurant_info_helper(req) {
     console.log(req.body);
     const selectRestaurantQuery = database.format_query(selectRestaurantInfo, [req.body.id]);
@@ -282,9 +284,9 @@ router.get("/stripe/connect/oauth", async (req, res) => {
             saveAccountId(connected_account_id, state).then(saveAccountRes => {
                 if (saveAccountRes != null) {
                     // Render some HTML or redirect to a different page.
-                    return res.redirect(200, "http://localhost:4200/restaurant")
+                    return res.redirect(200, domain + "/restaurant")
                 } else {
-                    return res.redirect(200, "http://localhost:4200/restaurant")
+                    return res.redirect(200, domain + "/restaurant")
                 }
             }).catch((error) => {
                 return res.status(200).json({success: false})
@@ -292,9 +294,9 @@ router.get("/stripe/connect/oauth", async (req, res) => {
         },
         (err) => {
             if (err.type === 'StripeInvalidGrantError') {
-                return res.redirect(400, "http://localhost:4200/restaurant")
+                return res.redirect(400, domain + "/restaurant")
             } else {
-                return res.redirect(500, "http://localhost:4200/restaurant")
+                return res.redirect(500, domain + "/restaurant")
             }
         }
     );

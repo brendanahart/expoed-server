@@ -19,5 +19,7 @@ env_variables:
   STRIPE_CHECKOUT_SECRET: "whsec_Sx6ilzRkQ5rWsLUJxpVYUXG7CH7gMf3X"
   GCLOUD_STORAGE_BUCKET: "expoed-data"
   GCLOUD_PROJECT: "expoed"
+  DATABASE: "expoed-prod"
+  DOMAIN: "https://expoed.restaurant"
 
 # [END gae_quickstart_yaml]
