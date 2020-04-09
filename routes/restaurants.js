@@ -44,7 +44,13 @@ const domain = process.env.DOMAIN || "http://localhost:4200";
 
 async function get_restaurant_info_helper(req) {
     console.log(req.body);
-    const selectRestaurantQuery = database.format_query(selectRestaurantInfo, [req.body.id]);
+    let userId = req.body.id;
+
+    if (userId.includes("%7C")) {
+        userId = userId.replace("%7C", "|");
+    }
+
+    const selectRestaurantQuery = database.format_query(selectRestaurantInfo, [userId]);
 
     console.log("Getting restaurant info from the database");
     return await database.query_database(selectRestaurantQuery).then(rows => {
