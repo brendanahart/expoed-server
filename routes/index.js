@@ -29,8 +29,8 @@ const bucketName = process.env.GCLOUD_STORAGE_BUCKET || "expoed-data";
 
 const bucket = storage.bucket(bucketName);
 
-const searchLikeRestaurants = "SELECT * FROM restaurants WHERE name LIKE ? ORDER BY RAND() LIMIT 100";
-const searchRandomXRestaurants = "SELECT * FROM restaurants ORDER BY RAND() LIMIT ?";
+const searchLikeRestaurants = "SELECT * FROM restaurants WHERE name LIKE ? AND stripe IS NOT NULL ORDER BY RAND() LIMIT 100";
+const searchRandomXRestaurants = "SELECT * FROM restaurants WHERE stripe IS NOT NULL ORDER BY RAND() LIMIT ?";
 
 const updatePictureUrlE = "UPDATE eaters SET pictureUrl = ? WHERE authId = ?";
 const updatePictureUrlR = "UPDATE restaurants SET pictureUrl = ? WHERE authId = ?";
