@@ -125,9 +125,8 @@ router.post('/upload/photo', multer.single('image'), (req, res, next) => {
 
     blobStream.on('finish', () => {
         // The public URL can be used to directly access the file via HTTP.
-        blob.name = blob.name.replace("|", "%7C");
         const publicUrl = format(
-            `https://storage.cloud.google.com/${bucket.name}/${blob.name}`
+            `https://storage.googleapis.com/${bucket.name}/${blob.name}`
         );
 
         const updatePictureUrlQuery = database.format_query(updatePictureUrl, [publicUrl, identity.id]);
