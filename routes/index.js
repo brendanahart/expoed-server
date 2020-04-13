@@ -1,6 +1,7 @@
 import {RestaurantSearch} from "../models/restaurant-search";
 import {ExpoedIdentity} from "../models/expoed-identity";
 import {RestaurantInfo} from "../models/restaurant-info";
+import {BasicSearchObject} from "../models/basic-search";
 
 const express = require('express');
 const router = express.Router();
@@ -32,6 +33,8 @@ const bucket = storage.bucket(bucketName);
 const searchLikeRestaurants = "SELECT * FROM restaurants WHERE name LIKE ? AND stripe IS NOT NULL ORDER BY RAND() LIMIT 100";
 const searchRandomXRestaurants = "SELECT * FROM restaurants WHERE stripe IS NOT NULL ORDER BY RAND() LIMIT ?";
 
+const searchRandomXRestaurantsAll = "SELECT * FROM restaurants WHERE stripe IS NOT NULL";
+
 const updatePictureUrlE = "UPDATE eaters SET pictureUrl = ? WHERE authId = ?";
 const updatePictureUrlR = "UPDATE restaurants SET pictureUrl = ? WHERE authId = ?";
 
@@ -41,6 +44,24 @@ const profileTypeO = 'offer';
 
 /* Respond to search about restaurants */
 const restaurantsReturn = 100;
+
+router.post('/searchAll', function(req, res) {
+    const searchRandomXRestaurantsAllQuery = database.format_query(searchRandomXRestaurantsAll);
+    console.log("Getting all the restaurants");
+
+    const returnRestaurants = [];
+
+    database.query_database(searchRandomXRestaurantsAllQuery).then(rows => {
+        for (let row of rows) {
+            const currRestaurant = new BasicSearchObject(row.authId, row.name, row.email, row.address, row.city);
+            returnRestaurants.push(currRestaurant);
+        }
+        res.send(JSON.stringify(returnRestaurants));
+    }).catch((error) => {
+        console.log("Error searching like restaurants: " + error);
+        res.status(500).json(JSON.stringify(returnRestaurants));
+    });
+});
 
 router.post('/search', function(req, res) {
     const searchObject = new RestaurantSearch(req.body.searchTerm);
